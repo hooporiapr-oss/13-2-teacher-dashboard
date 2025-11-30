@@ -3,278 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Teacher Dashboard | Digital Literacy Games | Akashic</title>
+<title>Teacher Dashboard | Akashic Digital Literacy</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff}
+.status-bar{background:rgba(0,0,0,0.4);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-size:0.85em}
+.status{display:flex;align-items:center;gap:8px}
+.status-dot{width:10px;height:10px;border-radius:50%}
+.status-dot.online{background:#2ecc71;box-shadow:0 0 10px #2ecc71}
+.status-dot.offline{background:#e74c3c}
+.status-dot.connecting{background:#f1c40f;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0.5}}
 .header{background:rgba(0,0,0,0.3);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.logo{font-size:1.4em;font-weight:bold}
+.logo{font-size:1.5em;font-weight:bold}
 .logo span{color:#ffd700}
-.header-actions{display:flex;gap:10px;align-items:center}
-.btn{padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:transform 0.2s}
-.btn:active{transform:scale(0.98)}
+.btn{padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px)}
 .btn-primary{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
 .btn-secondary{background:rgba(255,255,255,0.1);color:#fff;border:2px solid rgba(255,255,255,0.3)}
 .btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
+.container{max-width:1100px;margin:0 auto;padding:20px}
 
-.container{max-width:1200px;margin:0 auto;padding:20px}
+/* Class Code Box */
+.code-box{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.1));border:3px solid rgba(255,215,0,0.5);border-radius:20px;padding:30px;text-align:center;margin-bottom:25px}
+.code-box .label{font-size:1.1em;opacity:0.9;margin-bottom:10px}
+.code-box .code{font-size:3.5em;font-weight:bold;color:#ffd700;letter-spacing:10px;font-family:'Courier New',monospace;text-shadow:0 0 30px rgba(255,215,0,0.4)}
+.code-box .hint{font-size:0.9em;opacity:0.6;margin-top:15px}
 
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:25px}
-.stat-card{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);border-radius:16px;padding:20px;text-align:center}
-.stat-card .icon{font-size:2em;margin-bottom:10px}
-.stat-card .value{font-size:2.5em;font-weight:bold;color:#ffd700}
-.stat-card .label{font-size:0.85em;opacity:0.8;margin-top:5px}
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-bottom:25px}
+.stat{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:16px;padding:20px;text-align:center}
+.stat .icon{font-size:1.8em;margin-bottom:8px}
+.stat .value{font-size:2.2em;font-weight:bold;color:#ffd700}
+.stat .label{font-size:0.8em;opacity:0.7;margin-top:5px}
 
+/* Sections */
 .section{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;margin-bottom:20px}
 .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;flex-wrap:wrap;gap:10px}
-.section-title{font-size:1.3em;color:#ffd700}
-.section-title span{margin-right:8px}
+.section-title{font-size:1.25em;color:#ffd700}
+.live-tag{background:rgba(46,204,113,0.2);color:#2ecc71;padding:5px 12px;border-radius:15px;font-size:0.8em;display:flex;align-items:center;gap:5px}
+.live-tag .dot{width:8px;height:8px;background:#2ecc71;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:0.7}}
 
-.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:15px}
-.tab{padding:8px 16px;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);border-radius:20px;cursor:pointer;font-size:0.85em;transition:all 0.2s}
-.tab:hover{border-color:#ffd700}
-.tab.active{background:rgba(255,215,0,0.2);border-color:#ffd700;color:#ffd700}
+/* Live Feed */
+.feed{max-height:320px;overflow-y:auto}
+.feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:8px;border-left:4px solid #2ecc71}
+.feed-item .name{font-weight:bold}
+.feed-item .game{font-size:0.85em;opacity:0.7}
+.feed-item .score{font-size:1.3em;font-weight:bold;color:#ffd700}
+.feed-item .time{font-size:0.75em;opacity:0.5}
 
-.class-list{display:grid;gap:10px}
-.class-item{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.15);border-radius:12px;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.class-info h4{font-size:1.1em;margin-bottom:3px}
-.class-info span{font-size:0.85em;opacity:0.7}
-.class-stats{display:flex;gap:20px;flex-wrap:wrap}
-.class-stat{text-align:center}
-.class-stat b{display:block;color:#ffd700;font-size:1.2em}
-.class-stat span{font-size:0.75em;opacity:0.7}
-
-.student-table{width:100%;border-collapse:collapse;margin-top:10px}
-.student-table th,.student-table td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
-.student-table th{color:#ffd700;font-size:0.85em;text-transform:uppercase}
-.student-table tr:hover{background:rgba(255,255,255,0.05)}
-.progress-bar-mini{width:80px;height:8px;background:rgba(255,255,255,0.2);border-radius:4px;overflow:hidden}
-.progress-bar-mini .fill{height:100%;background:linear-gradient(90deg,#2ecc71,#27ae60);border-radius:4px}
-.badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:0.75em;font-weight:bold}
+/* Table */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
+th{color:#ffd700;font-size:0.8em;text-transform:uppercase;letter-spacing:1px}
+tr:hover{background:rgba(255,255,255,0.03)}
+.badge{padding:4px 10px;border-radius:10px;font-size:0.75em;font-weight:bold}
 .badge-green{background:rgba(46,204,113,0.2);color:#2ecc71}
 .badge-yellow{background:rgba(241,196,15,0.2);color:#f1c40f}
 .badge-red{background:rgba(231,76,60,0.2);color:#e74c3c}
-.badge-blue{background:rgba(52,152,219,0.2);color:#3498db}
 
-.quick-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
-.quick-link{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.15);border-radius:12px;padding:20px;text-decoration:none;color:#fff;transition:all 0.2s;display:flex;align-items:center;gap:15px}
-.quick-link:hover{border-color:#ffd700;transform:translateY(-2px)}
-.quick-link .icon{font-size:2em}
-.quick-link h4{margin-bottom:3px}
-.quick-link span{font-size:0.85em;opacity:0.7}
-
-.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;padding:20px}
-.modal.show{display:flex}
-.modal-content{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,255,255,0.2);border-radius:16px;padding:25px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.modal-title{font-size:1.3em;color:#ffd700}
-.modal-close{background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;opacity:0.7}
-.modal-close:hover{opacity:1}
-
+/* Forms */
+.form-box{background:rgba(0,0,0,0.3);padding:25px;border-radius:16px}
+.form-box h2{text-align:center;margin-bottom:20px}
 .form-group{margin-bottom:15px}
 .form-group label{display:block;margin-bottom:5px;font-size:0.9em;opacity:0.8}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:2px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.1);color:#fff;font-size:1em}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#ffd700}
-.form-group select option{background:#1a1a2e;color:#fff}
+.form-group input,.form-group select{width:100%;padding:12px 15px;border:2px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.1);color:#fff;font-size:1em}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#ffd700}
+.form-group select option{background:#1a1a2e}
 
-.game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.game-card-mini{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s}
-.game-card-mini:hover{border-color:#ffd700}
-.game-card-mini.selected{border-color:#2ecc71;background:rgba(46,204,113,0.1)}
-.game-card-mini h5{font-size:0.95em;margin-bottom:3px}
-.game-card-mini span{font-size:0.8em;opacity:0.7}
+/* Empty State */
+.empty{text-align:center;padding:40px;opacity:0.6}
+.empty .icon{font-size:3em;margin-bottom:10px}
 
-.chart-container{background:rgba(0,0,0,0.2);border-radius:12px;padding:20px;margin-top:15px}
-.bar-chart{display:flex;align-items:flex-end;justify-content:space-around;height:150px;gap:10px;padding-top:20px}
-.bar{display:flex;flex-direction:column;align-items:center;flex:1;max-width:60px}
-.bar-fill{width:100%;background:linear-gradient(180deg,#ffd700,#ff8c00);border-radius:5px 5px 0 0;transition:height 0.5s}
-.bar-label{font-size:0.7em;margin-top:8px;text-align:center;opacity:0.8}
-.bar-value{font-size:0.75em;color:#ffd700;margin-bottom:5px}
+/* Config Notice */
+.config-notice{background:rgba(231,76,60,0.2);border:2px solid rgba(231,76,60,0.4);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center}
+.config-notice h3{color:#e74c3c;margin-bottom:10px}
+.config-notice code{background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px}
 
-.empty-state{text-align:center;padding:40px 20px;opacity:0.7}
-.empty-state .icon{font-size:3em;margin-bottom:15px}
-
-.alert{padding:15px;border-radius:10px;margin-bottom:15px;display:flex;align-items:center;gap:10px}
-.alert-info{background:rgba(52,152,219,0.2);border:2px solid rgba(52,152,219,0.3)}
-.alert-success{background:rgba(46,204,113,0.2);border:2px solid rgba(46,204,113,0.3)}
-
-.lang-toggle{display:flex;gap:5px}
-.lang-btn{padding:5px 10px;border:2px solid rgba(255,255,255,0.3);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:0.8em}
-.lang-btn.active{background:rgba(255,215,0,0.2);border-color:#ffd700}
-
-@media(max-width:768px){
-.header{padding:10px 15px}
-.container{padding:15px}
-.student-table{font-size:0.85em}
-.student-table th,.student-table td{padding:8px 5px}
+@media(max-width:600px){
+.code-box .code{font-size:2.2em;letter-spacing:5px}
+.stats{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
 
+<!-- ====== CONFIGURE YOUR API URL HERE ====== -->
+<script>
+// CHANGE THIS to your Render URL after deployment!
+window.API_URL = 'https://digital-literacy-backend.onrender.com/api';
+// For local testing: window.API_URL = 'http://localhost:3000/api';
+</script>
+
+<div class="status-bar">
+<div class="status"><span class="status-dot connecting" id="statusDot"></span><span id="statusText">Connecting...</span></div>
+<div id="lastUpdate"></div>
+</div>
+
 <header class="header">
 <div class="logo">📊 <span>Teacher Dashboard</span></div>
-<div class="header-actions">
-<div class="lang-toggle">
-<button class="lang-btn active" onclick="setLang('en')">EN</button>
-<button class="lang-btn" onclick="setLang('es')">ES</button>
-</div>
-<a href="digital-literacy-homepage.html" class="btn btn-secondary">← Student View</a>
-<button class="btn btn-primary" onclick="openModal('addClass')">+ Add Class</button>
+<div>
+<a href="digital-literacy-homepage.html" class="btn btn-secondary">🎮 Games</a>
 </div>
 </header>
 
 <div class="container">
 
-<!-- Overview Stats -->
-<div class="stats-grid">
-<div class="stat-card">
-<div class="icon">👥</div>
-<div class="value" id="totalStudents">0</div>
-<div class="label">Total Students</div>
-</div>
-<div class="stat-card">
-<div class="icon">📚</div>
-<div class="value" id="totalClasses">0</div>
-<div class="label">Classes</div>
-</div>
-<div class="stat-card">
-<div class="icon">🎮</div>
-<div class="value" id="gamesPlayed">0</div>
-<div class="label">Games Played</div>
-</div>
-<div class="stat-card">
-<div class="icon">📈</div>
-<div class="value" id="avgScore">0%</div>
-<div class="label">Avg. Score</div>
-</div>
+<!-- Config Notice (shown if API not configured) -->
+<div class="config-notice" id="configNotice" style="display:none">
+<h3>⚠️ API Not Configured</h3>
+<p>Edit the <code>API_URL</code> at the top of this file to point to your Render backend.</p>
 </div>
 
-<!-- Alert -->
-<div class="alert alert-info">
-<span>💡</span>
-<span><strong>Tip:</strong> Share game links with students. Their progress saves locally on their devices. Use class codes for easy tracking!</span>
-</div>
+<!-- Setup View -->
+<div id="setupView">
+<div class="form-box">
+<h2>🎓 Get Started</h2>
 
-<!-- Quick Links -->
-<div class="section">
-<div class="section-header">
-<h3 class="section-title"><span>🚀</span> Quick Actions</h3>
-</div>
-<div class="quick-links">
-<a href="digital-literacy-homepage.html" class="quick-link" target="_blank">
-<div class="icon">🎮</div>
-<div><h4>Student Homepage</h4><span>View games as students see them</span></div>
-</a>
-<div class="quick-link" onclick="openModal('assignGames')">
-<div class="icon">📋</div>
-<div><h4>Assign Games</h4><span>Create assignment for a class</span></div>
-</div>
-<div class="quick-link" onclick="openModal('generateCode')">
-<div class="icon">🔗</div>
-<div><h4>Generate Class Code</h4><span>Create shareable code for students</span></div>
-</div>
-<div class="quick-link" onclick="exportData()">
-<div class="icon">📊</div>
-<div><h4>Export Reports</h4><span>Download progress as CSV</span></div>
-</div>
-</div>
-</div>
-
-<!-- Classes Section -->
-<div class="section">
-<div class="section-header">
-<h3 class="section-title"><span>🏫</span> My Classes</h3>
-<button class="btn btn-secondary" onclick="openModal('addClass')">+ New Class</button>
-</div>
-<div class="tabs">
-<div class="tab active" onclick="filterClasses('all')">All Grades</div>
-<div class="tab" onclick="filterClasses('k2')">K-2</div>
-<div class="tab" onclick="filterClasses('35')">3-5</div>
-<div class="tab" onclick="filterClasses('68')">6-8</div>
-<div class="tab" onclick="filterClasses('912')">9-12</div>
-</div>
-<div class="class-list" id="classList">
-<!-- Classes will be populated here -->
-</div>
-</div>
-
-<!-- Performance Chart -->
-<div class="section">
-<div class="section-header">
-<h3 class="section-title"><span>📈</span> Weekly Performance</h3>
-<select id="chartClass" onchange="updateChart()" style="padding:8px 15px;border-radius:10px;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);color:#fff">
-<option value="all">All Classes</option>
-</select>
-</div>
-<div class="chart-container">
-<div class="bar-chart" id="barChart">
-<div class="bar"><div class="bar-value">45</div><div class="bar-fill" style="height:45%"></div><div class="bar-label">Mon</div></div>
-<div class="bar"><div class="bar-value">62</div><div class="bar-fill" style="height:62%"></div><div class="bar-label">Tue</div></div>
-<div class="bar"><div class="bar-value">78</div><div class="bar-fill" style="height:78%"></div><div class="bar-label">Wed</div></div>
-<div class="bar"><div class="bar-value">55</div><div class="bar-fill" style="height:55%"></div><div class="bar-label">Thu</div></div>
-<div class="bar"><div class="bar-value">89</div><div class="bar-fill" style="height:89%"></div><div class="bar-label">Fri</div></div>
-<div class="bar"><div class="bar-value">34</div><div class="bar-fill" style="height:34%"></div><div class="bar-label">Sat</div></div>
-<div class="bar"><div class="bar-value">21</div><div class="bar-fill" style="height:21%"></div><div class="bar-label">Sun</div></div>
-</div>
-</div>
-</div>
-
-<!-- Student Progress Section -->
-<div class="section">
-<div class="section-header">
-<h3 class="section-title"><span>👨‍🎓</span> Student Progress</h3>
-<input type="text" placeholder="🔍 Search students..." id="searchStudent" style="padding:8px 15px;border-radius:10px;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);color:#fff;width:200px">
-</div>
-<div style="overflow-x:auto">
-<table class="student-table">
-<thead>
-<tr>
-<th>Student</th>
-<th>Class</th>
-<th>Games Played</th>
-<th>Avg Score</th>
-<th>Progress</th>
-<th>Status</th>
-<th>Last Active</th>
-</tr>
-</thead>
-<tbody id="studentTable">
-<!-- Students will be populated here -->
-</tbody>
-</table>
-</div>
-</div>
-
-<!-- Games by Grade -->
-<div class="section">
-<div class="section-header">
-<h3 class="section-title"><span>🎮</span> Available Games by Grade</h3>
-</div>
-<div class="tabs" id="gameTabs">
-<div class="tab active" onclick="showGames('k2')">K-2</div>
-<div class="tab" onclick="showGames('35')">3-5</div>
-<div class="tab" onclick="showGames('68')">6-8</div>
-<div class="tab" onclick="showGames('912')">9-12</div>
-</div>
-<div class="game-grid" id="gameGrid">
-<!-- Games will be populated here -->
-</div>
-</div>
-
-</div>
-
-<!-- Add Class Modal -->
-<div class="modal" id="addClassModal">
-<div class="modal-content">
-<div class="modal-header">
-<h3 class="modal-title">➕ Add New Class</h3>
-<button class="modal-close" onclick="closeModal('addClass')">&times;</button>
-</div>
 <div class="form-group">
-<label>Class Name</label>
-<input type="text" id="className" placeholder="e.g., 3rd Grade - Room 201">
+<label>Create a New Class</label>
+<input type="text" id="className" placeholder="Class name (e.g., 3rd Grade Room 201)">
 </div>
+
 <div class="form-group">
 <label>Grade Level</label>
 <select id="classGrade">
@@ -284,332 +136,294 @@ body{font-family:Georgia,serif;background:linear-gradient(135deg,#1a1a2e,#16213e
 <option value="912">9-12 (Ages 14-18)</option>
 </select>
 </div>
+
 <div class="form-group">
-<label>Number of Students</label>
-<input type="number" id="classSize" placeholder="25" min="1" max="100">
+<label>Your Name (optional)</label>
+<input type="text" id="teacherName" placeholder="Teacher name">
 </div>
-<button class="btn btn-gold" onclick="addClass()" style="width:100%;margin-top:10px">Create Class</button>
+
+<button class="btn btn-gold" onclick="createClass()" style="width:100%;padding:15px;font-size:1.1em">Create Class</button>
+
+<div style="text-align:center;margin:25px 0 15px;opacity:0.5">— or —</div>
+
+<div class="form-group">
+<label>Enter Existing Class Code</label>
+<input type="text" id="existingCode" placeholder="ABC123" style="text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:1.2em">
+</div>
+
+<button class="btn btn-primary" onclick="loadClass()" style="width:100%">Open Dashboard</button>
 </div>
 </div>
 
-<!-- Assign Games Modal -->
-<div class="modal" id="assignGamesModal">
-<div class="modal-content">
-<div class="modal-header">
-<h3 class="modal-title">📋 Assign Games</h3>
-<button class="modal-close" onclick="closeModal('assignGames')">&times;</button>
+<!-- Dashboard View -->
+<div id="dashboardView" style="display:none">
+
+<div class="code-box">
+<div class="label">📢 Share this code with your students</div>
+<div class="code" id="displayCode">------</div>
+<div class="hint">Students enter this at "My Profile" before playing games</div>
 </div>
-<div class="form-group">
-<label>Select Class</label>
-<select id="assignClass">
-<option value="">Choose a class...</option>
-</select>
+
+<div class="stats">
+<div class="stat"><div class="icon">👥</div><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
+<div class="stat"><div class="icon">🎮</div><div class="value" id="statGames">0</div><div class="label">Games</div></div>
+<div class="stat"><div class="icon">📈</div><div class="value" id="statAvg">0%</div><div class="label">Avg Score</div></div>
+<div class="stat"><div class="icon">📅</div><div class="value" id="statToday">0</div><div class="label">Today</div></div>
 </div>
-<div class="form-group">
-<label>Select Games (click to select)</label>
-<div class="game-grid" id="assignGameGrid" style="max-height:200px;overflow-y:auto">
+
+<div class="section">
+<div class="section-header">
+<h3 class="section-title">⚡ Live Scores</h3>
+<span class="live-tag"><span class="dot"></span> Auto-refresh</span>
 </div>
-</div>
-<div class="form-group">
-<label>Due Date (Optional)</label>
-<input type="date" id="dueDate">
-</div>
-<button class="btn btn-gold" onclick="createAssignment()" style="width:100%;margin-top:10px">Create Assignment</button>
+<div class="feed" id="liveFeed">
+<div class="empty"><div class="icon">📡</div><p>Waiting for scores...</p></div>
 </div>
 </div>
 
-<!-- Generate Code Modal -->
-<div class="modal" id="generateCodeModal">
-<div class="modal-content">
-<div class="modal-header">
-<h3 class="modal-title">🔗 Class Code</h3>
-<button class="modal-close" onclick="closeModal('generateCode')">&times;</button>
+<div class="section">
+<div class="section-header">
+<h3 class="section-title">👨‍🎓 Student Progress</h3>
+<button class="btn btn-secondary" onclick="exportCSV()">📊 Export</button>
 </div>
-<div class="form-group">
-<label>Select Class</label>
-<select id="codeClass" onchange="generateCode()">
-<option value="">Choose a class...</option>
-</select>
-</div>
-<div id="codeDisplay" style="display:none">
-<div style="text-align:center;padding:20px;background:rgba(255,215,0,0.1);border-radius:12px;margin:15px 0">
-<div style="font-size:0.9em;opacity:0.7;margin-bottom:5px">Class Code</div>
-<div style="font-size:2.5em;font-weight:bold;color:#ffd700;letter-spacing:5px" id="classCode">ABC123</div>
-</div>
-<p style="font-size:0.85em;opacity:0.7;text-align:center">Students enter this code to join your class and track their progress.</p>
-<button class="btn btn-primary" onclick="copyCode()" style="width:100%;margin-top:10px">📋 Copy Code</button>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Student</th><th>Games</th><th>Avg</th><th>Best</th><th>Status</th></tr></thead>
+<tbody id="studentTable"><tr><td colspan="5" class="empty">No students yet</td></tr></tbody>
+</table>
 </div>
 </div>
+
+<div style="text-align:center;margin-top:20px">
+<button class="btn btn-secondary" onclick="switchClass()">🔄 Switch Class</button>
+<button class="btn btn-secondary" onclick="copyCode()" style="margin-left:10px">📋 Copy Code</button>
+</div>
+
+</div>
+
 </div>
 
 <script>
-// Data storage
-var classes = JSON.parse(localStorage.getItem('dl_classes') || '[]');
-var students = JSON.parse(localStorage.getItem('dl_students') || '[]');
+let classCode = localStorage.getItem('teacher_class_code');
+let dashboardData = null;
+let refreshTimer = null;
 
-// Games data
-var games = {
-    k2: [
-        {id: 'k2-visual', name: 'Visual Memory', icon: '👁️', en: 'games-k2-visual-memory-en.html', es: 'games-k2-visual-memory-es.html'},
-        {id: 'k2-color', name: 'Color Match', icon: '🎨', en: 'games-k2-color-match-en.html', es: 'games-k2-color-match-es.html'},
-        {id: 'k2-sequence', name: 'Sequence Memory', icon: '🔲', en: 'games-k2-sequence-memory-en.html', es: 'games-k2-sequence-memory-es.html'}
-    ],
-    '35': [
-        {id: '35-number', name: 'Number Memory', icon: '🔢', en: 'games-35-number-memory-en.html', es: 'games-35-number-memory-es.html'},
-        {id: '35-wordsearch', name: 'Tech Word Search', icon: '🔍', en: 'games-35-word-search-en.html', es: 'games-35-word-search-es.html'},
-        {id: '35-visual', name: 'Visual Memory+', icon: '👁️', en: 'games-35-visual-memory-en.html', es: 'games-35-visual-memory-es.html'}
-    ],
-    '68': [
-        {id: '68-typing', name: 'Typing + Quiz', icon: '⌨️', en: 'games-68-typing-quiz-en.html', es: 'games-68-typing-quiz-es.html'},
-        {id: '68-wordsearch', name: 'Advanced Word Search', icon: '🔍', en: 'games-68-word-search-en.html', es: 'games-68-word-search-es.html'},
-        {id: '68-number', name: 'Number Memory Pro', icon: '🔢', en: 'games-68-number-memory-en.html', es: 'games-68-number-memory-es.html'}
-    ],
-    '912': [
-        {id: '912-assessment', name: 'Full Assessment', icon: '📝', en: 'games-912-assessment-en.html', es: 'games-912-assessment-es.html'},
-        {id: '912-typing', name: 'Speed Typing', icon: '⌨️', en: 'games-912-typing-en.html', es: 'games-912-typing-es.html'},
-        {id: '912-stroop', name: 'Stroop Challenge', icon: '🎨', en: 'games-912-stroop-challenge-en.html', es: 'games-912-stroop-challenge-es.html'}
-    ]
-};
-
-// Sample data for demo
-if (classes.length === 0) {
-    classes = [
-        {id: 1, name: '3rd Grade - Room 201', grade: '35', students: 24, code: 'ABC123'},
-        {id: 2, name: '7th Grade Digital Lit', grade: '68', students: 28, code: 'XYZ789'},
-        {id: 3, name: 'HS Computer Science', grade: '912', students: 22, code: 'CS2024'}
-    ];
+// Initialize
+async function init() {
+    // Check if API is configured
+    if (window.API_URL.includes('your-backend')) {
+        document.getElementById('configNotice').style.display = 'block';
+    }
     
-    students = [
-        {id: 1, name: 'Maria Garcia', classId: 1, gamesPlayed: 8, avgScore: 92, progress: 85, lastActive: '2024-01-15'},
-        {id: 2, name: 'James Wilson', classId: 1, gamesPlayed: 6, avgScore: 78, progress: 60, lastActive: '2024-01-14'},
-        {id: 3, name: 'Sofia Rodriguez', classId: 2, gamesPlayed: 12, avgScore: 88, progress: 95, lastActive: '2024-01-15'},
-        {id: 4, name: 'David Chen', classId: 2, gamesPlayed: 10, avgScore: 95, progress: 100, lastActive: '2024-01-15'},
-        {id: 5, name: 'Emma Johnson', classId: 3, gamesPlayed: 15, avgScore: 91, progress: 90, lastActive: '2024-01-13'},
-        {id: 6, name: 'Luis Martinez', classId: 1, gamesPlayed: 4, avgScore: 65, progress: 40, lastActive: '2024-01-10'}
-    ];
+    if (classCode) {
+        showDashboard();
+        await loadDashboardData();
+        startAutoRefresh();
+    } else {
+        showSetup();
+    }
     
-    saveData();
+    checkConnection();
 }
 
-function saveData() {
-    localStorage.setItem('dl_classes', JSON.stringify(classes));
-    localStorage.setItem('dl_students', JSON.stringify(students));
+async function checkConnection() {
+    try {
+        const res = await fetch(window.API_URL + '/health');
+        const data = await res.json();
+        setStatus('online', data.counts);
+    } catch(e) {
+        setStatus('offline');
+    }
 }
 
-function updateStats() {
-    document.getElementById('totalStudents').textContent = students.length;
-    document.getElementById('totalClasses').textContent = classes.length;
-    document.getElementById('gamesPlayed').textContent = students.reduce((a, s) => a + s.gamesPlayed, 0);
-    var avg = students.length > 0 ? Math.round(students.reduce((a, s) => a + s.avgScore, 0) / students.length) : 0;
-    document.getElementById('avgScore').textContent = avg + '%';
-}
-
-function renderClasses(filter) {
-    var list = document.getElementById('classList');
-    var filtered = filter && filter !== 'all' ? classes.filter(c => c.grade === filter) : classes;
+function setStatus(status, counts) {
+    const dot = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    dot.className = 'status-dot ' + status;
     
-    if (filtered.length === 0) {
-        list.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>No classes yet. Create your first class!</p></div>';
+    if (status === 'online') {
+        text.textContent = 'Connected';
+        if (counts) text.textContent += ` • ${counts.classes} classes, ${counts.scores} scores`;
+    } else {
+        text.textContent = 'Offline - check API URL';
+    }
+}
+
+function showSetup() {
+    document.getElementById('setupView').style.display = 'block';
+    document.getElementById('dashboardView').style.display = 'none';
+}
+
+function showDashboard() {
+    document.getElementById('setupView').style.display = 'none';
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('displayCode').textContent = classCode;
+}
+
+async function createClass() {
+    const name = document.getElementById('className').value.trim();
+    const grade = document.getElementById('classGrade').value;
+    const teacherName = document.getElementById('teacherName').value.trim();
+    
+    if (!name) {
+        alert('Please enter a class name');
         return;
     }
     
-    list.innerHTML = filtered.map(c => {
-        var classStudents = students.filter(s => s.classId === c.id);
-        var avgScore = classStudents.length > 0 ? Math.round(classStudents.reduce((a, s) => a + s.avgScore, 0) / classStudents.length) : 0;
-        var gradeLabel = {k2: 'K-2', '35': '3-5', '68': '6-8', '912': '9-12'}[c.grade];
+    try {
+        const res = await fetch(window.API_URL + '/classes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, grade, teacherName })
+        });
+        const data = await res.json();
         
-        return '<div class="class-item">' +
-            '<div class="class-info"><h4>' + c.name + '</h4><span>Grade ' + gradeLabel + ' • Code: <strong>' + c.code + '</strong></span></div>' +
-            '<div class="class-stats">' +
-                '<div class="class-stat"><b>' + c.students + '</b><span>Students</span></div>' +
-                '<div class="class-stat"><b>' + avgScore + '%</b><span>Avg Score</span></div>' +
-            '</div>' +
-        '</div>';
-    }).join('');
-}
-
-function renderStudents() {
-    var table = document.getElementById('studentTable');
-    
-    if (students.length === 0) {
-        table.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;opacity:0.7">No students yet</td></tr>';
-        return;
-    }
-    
-    table.innerHTML = students.map(s => {
-        var cls = classes.find(c => c.id === s.classId);
-        var statusClass = s.progress >= 80 ? 'green' : s.progress >= 50 ? 'yellow' : 'red';
-        var statusText = s.progress >= 80 ? 'On Track' : s.progress >= 50 ? 'In Progress' : 'Needs Help';
-        
-        return '<tr>' +
-            '<td><strong>' + s.name + '</strong></td>' +
-            '<td>' + (cls ? cls.name : 'N/A') + '</td>' +
-            '<td>' + s.gamesPlayed + '</td>' +
-            '<td>' + s.avgScore + '%</td>' +
-            '<td><div class="progress-bar-mini"><div class="fill" style="width:' + s.progress + '%"></div></div></td>' +
-            '<td><span class="badge badge-' + statusClass + '">' + statusText + '</span></td>' +
-            '<td>' + s.lastActive + '</td>' +
-        '</tr>';
-    }).join('');
-}
-
-function showGames(grade) {
-    document.querySelectorAll('#gameTabs .tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    var grid = document.getElementById('gameGrid');
-    var gradeGames = games[grade] || [];
-    
-    grid.innerHTML = gradeGames.map(g => 
-        '<div class="game-card-mini" onclick="window.open(\'' + g.en + '\', \'_blank\')">' +
-            '<h5>' + g.icon + ' ' + g.name + '</h5>' +
-            '<span>Click to preview</span>' +
-        '</div>'
-    ).join('');
-}
-
-function filterClasses(filter) {
-    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    renderClasses(filter);
-}
-
-function openModal(type) {
-    document.getElementById(type + 'Modal').classList.add('show');
-    
-    if (type === 'assignGames' || type === 'generateCode') {
-        var select = document.getElementById(type === 'assignGames' ? 'assignClass' : 'codeClass');
-        select.innerHTML = '<option value="">Choose a class...</option>' + 
-            classes.map(c => '<option value="' + c.id + '">' + c.name + '</option>').join('');
-    }
-    
-    if (type === 'assignGames') {
-        var grid = document.getElementById('assignGameGrid');
-        var allGames = Object.values(games).flat();
-        grid.innerHTML = allGames.map(g => 
-            '<div class="game-card-mini" data-id="' + g.id + '" onclick="toggleGameSelect(this)">' +
-                '<h5>' + g.icon + ' ' + g.name + '</h5>' +
-            '</div>'
-        ).join('');
+        if (data.success) {
+            classCode = data.classCode;
+            localStorage.setItem('teacher_class_code', classCode);
+            alert('Class created!\\n\\nYour code is: ' + classCode + '\\n\\nShare this with students!');
+            showDashboard();
+            startAutoRefresh();
+        } else {
+            alert('Error: ' + (data.error || 'Unknown error'));
+        }
+    } catch(e) {
+        alert('Could not connect to server. Check your API URL.');
     }
 }
 
-function closeModal(type) {
-    document.getElementById(type + 'Modal').classList.remove('show');
-}
-
-function addClass() {
-    var name = document.getElementById('className').value;
-    var grade = document.getElementById('classGrade').value;
-    var size = parseInt(document.getElementById('classSize').value) || 25;
-    
-    if (!name) { alert('Please enter a class name'); return; }
-    
-    var code = Math.random().toString(36).substring(2, 8).toUpperCase();
-    classes.push({
-        id: Date.now(),
-        name: name,
-        grade: grade,
-        students: size,
-        code: code
-    });
-    
-    saveData();
-    renderClasses();
-    updateStats();
-    closeModal('addClass');
-    
-    document.getElementById('className').value = '';
-    document.getElementById('classSize').value = '';
-}
-
-function generateCode() {
-    var classId = document.getElementById('codeClass').value;
-    if (!classId) {
-        document.getElementById('codeDisplay').style.display = 'none';
-        return;
+function loadClass() {
+    const code = document.getElementById('existingCode').value.trim().toUpperCase();
+    if (code.length >= 4) {
+        classCode = code;
+        localStorage.setItem('teacher_class_code', code);
+        showDashboard();
+        loadDashboardData();
+        startAutoRefresh();
+    } else {
+        alert('Please enter a valid code');
     }
-    
-    var cls = classes.find(c => c.id == classId);
-    if (cls) {
-        document.getElementById('classCode').textContent = cls.code;
-        document.getElementById('codeDisplay').style.display = 'block';
+}
+
+function switchClass() {
+    if (confirm('Switch to a different class?')) {
+        stopAutoRefresh();
+        localStorage.removeItem('teacher_class_code');
+        classCode = null;
+        showSetup();
     }
 }
 
 function copyCode() {
-    var code = document.getElementById('classCode').textContent;
-    navigator.clipboard.writeText(code).then(() => {
-        alert('Code copied: ' + code);
+    navigator.clipboard.writeText(classCode);
+    alert('Copied: ' + classCode);
+}
+
+async function loadDashboardData() {
+    if (!classCode) return;
+    
+    try {
+        const res = await fetch(window.API_URL + '/classes/' + classCode + '/dashboard');
+        if (!res.ok) throw new Error('Not found');
+        
+        dashboardData = await res.json();
+        updateUI();
+        setStatus('online');
+        document.getElementById('lastUpdate').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    } catch(e) {
+        console.log('Load error:', e);
+    }
+}
+
+function updateUI() {
+    if (!dashboardData) return;
+    
+    const { stats, students, recentScores } = dashboardData;
+    
+    // Stats
+    document.getElementById('statStudents').textContent = stats.totalStudents;
+    document.getElementById('statGames').textContent = stats.totalGames;
+    document.getElementById('statAvg').textContent = stats.avgScore + '%';
+    document.getElementById('statToday').textContent = stats.todayGames;
+    
+    // Live feed
+    const feed = document.getElementById('liveFeed');
+    if (recentScores && recentScores.length > 0) {
+        feed.innerHTML = recentScores.slice(0, 15).map(s => {
+            const time = new Date(s.timestamp).toLocaleTimeString();
+            return `<div class="feed-item">
+                <div><div class="name">${s.studentName}</div><div class="game">${formatGame(s.gameId)}</div></div>
+                <div style="text-align:right"><span class="score">${s.percentage}%</span><div class="time">${time}</div></div>
+            </div>`;
+        }).join('');
+    } else {
+        feed.innerHTML = '<div class="empty"><div class="icon">📡</div><p>Waiting for scores...</p></div>';
+    }
+    
+    // Student table
+    const tbody = document.getElementById('studentTable');
+    if (students && students.length > 0) {
+        tbody.innerHTML = students.map(s => {
+            const badge = s.avgScore >= 80 ? 'green' : s.avgScore >= 60 ? 'yellow' : 'red';
+            const status = s.avgScore >= 80 ? 'Excellent' : s.avgScore >= 60 ? 'Good' : 'Needs Help';
+            return `<tr>
+                <td><strong>${s.name}</strong></td>
+                <td>${s.gamesPlayed}</td>
+                <td>${s.avgScore}%</td>
+                <td>${s.bestScore}%</td>
+                <td><span class="badge badge-${badge}">${status}</span></td>
+            </tr>`;
+        }).join('');
+    } else {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No students yet</td></tr>';
+    }
+}
+
+function formatGame(gameId) {
+    const names = {
+        'k2-visual-memory': '👁️ Visual Memory',
+        'k2-color-match': '🎨 Color Match',
+        'k2-sequence-memory': '🔲 Sequence',
+        '35-number-memory': '🔢 Numbers',
+        '35-word-search': '🔍 Word Search',
+        '35-visual-memory': '👁️ Visual+',
+        '68-typing-quiz': '⌨️ Typing',
+        '68-word-search': '🔍 Words',
+        '68-number-memory': '🔢 Numbers Pro',
+        '912-assessment': '📝 Assessment',
+        '912-typing': '⌨️ Speed Type',
+        '912-stroop-challenge': '🎨 Stroop'
+    };
+    return names[gameId] || gameId;
+}
+
+function startAutoRefresh() {
+    stopAutoRefresh();
+    refreshTimer = setInterval(loadDashboardData, 10000);
+}
+
+function stopAutoRefresh() {
+    if (refreshTimer) clearInterval(refreshTimer);
+}
+
+function exportCSV() {
+    if (!dashboardData || !dashboardData.students) return;
+    
+    let csv = 'Student,Games Played,Avg Score,Best Score\\n';
+    dashboardData.students.forEach(s => {
+        csv += `"${s.name}",${s.gamesPlayed},${s.avgScore}%,${s.bestScore}%\\n`;
     });
-}
-
-function toggleGameSelect(el) {
-    el.classList.toggle('selected');
-}
-
-function createAssignment() {
-    var classId = document.getElementById('assignClass').value;
-    var selectedGames = document.querySelectorAll('#assignGameGrid .game-card-mini.selected');
-    var dueDate = document.getElementById('dueDate').value;
     
-    if (!classId) { alert('Please select a class'); return; }
-    if (selectedGames.length === 0) { alert('Please select at least one game'); return; }
-    
-    alert('Assignment created for ' + selectedGames.length + ' game(s)!' + (dueDate ? ' Due: ' + dueDate : ''));
-    closeModal('assignGames');
-}
-
-function exportData() {
-    var csv = 'Student,Class,Games Played,Avg Score,Progress,Last Active\n';
-    students.forEach(s => {
-        var cls = classes.find(c => c.id === s.classId);
-        csv += s.name + ',' + (cls ? cls.name : 'N/A') + ',' + s.gamesPlayed + ',' + s.avgScore + '%,' + s.progress + '%,' + s.lastActive + '\n';
-    });
-    
-    var blob = new Blob([csv], {type: 'text/csv'});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
     a.href = url;
-    a.download = 'student-progress-' + new Date().toISOString().split('T')[0] + '.csv';
+    a.download = `class-${classCode}-report.csv`;
     a.click();
 }
 
-function setLang(lang) {
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    // Future: implement full i18n
-}
-
-// Initialize
-updateStats();
-renderClasses();
-renderStudents();
-showGames('k2');
-
-// Update class select for chart
-var chartSelect = document.getElementById('chartClass');
-classes.forEach(c => {
-    chartSelect.innerHTML += '<option value="' + c.id + '">' + c.name + '</option>';
-});
-
-// Close modals on outside click
-document.querySelectorAll('.modal').forEach(m => {
-    m.addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.classList.remove('show');
-        }
-    });
-});
-
-// Search students
-document.getElementById('searchStudent').addEventListener('input', function(e) {
-    var query = e.target.value.toLowerCase();
-    document.querySelectorAll('#studentTable tr').forEach(row => {
-        var name = row.querySelector('td:first-child')?.textContent.toLowerCase() || '';
-        row.style.display = name.includes(query) ? '' : 'none';
-    });
-});
+// Start
+init();
 </script>
 
 </body>
